@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Үнэтэй.мн — Монголын зарын сайт</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="logo" href="/">Үнэтэй<span>.мн</span></a>
+    <div class="nav-links">
+      <a href="#" onclick="showSection('realestate')">🏠 Үл хөдлөх</a>
+      <a href="#" onclick="showSection('cars')">🚗 Автомашин</a>
+      <a href="#" onclick="showSection('jobs')">💼 Ажлын байр</a>
+    </div>
+    <button class="btn-primary" onclick="showPostModal()">+ Зар оруулах</button>
+  </div>
+</nav>
+
+<div class="hero" id="hero">
+  <h1>Монголын хамгийн том зарын сайт</h1>
+  <p>Үл хөдлөх, автомашин, ажлын байр — бүгдийг нэг дороос</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="showSection('realestate')">🏠 Үл хөдлөх</button>
+    <button class="btn-primary" onclick="showSection('cars')">🚗 Автомашин</button>
+    <button class="btn-primary" onclick="showSection('jobs')">💼 Ажлын байр</button>
+  </div>
+</div>
+
+<main class="main-layout">
+
+  <section id="section-realestate" class="section hidden">
+    <h2>🏠 Үл хөдлөх зарууд</h2>
+    <div class="filter-bar">
+      <select id="re-location"><option value="">Бүх байршил</option>
+        <option>Баянзүрх</option><option>Хан-Уул</option><option>Сүхбаатар</option>
+        <option>Чингэлтэй</option><option>Налайх</option><option>Багануур</option>
+        <option>Сонгинохайрхан</option><option>Бага тойруу</option><option>Яармаг</option>
+      </select>
+      <select id="re-rooms"><option value="">Өрөө</option>
+        <option value="1">1 өрөө</option><option value="2">2 өрөө</option>
+        <option value="3">3 өрөө</option><option value="4">4 өрөө</option><option value="5">5+</option>
+      </select>
+      <input type="number" id="re-floor-min" placeholder="Давхар (доод)"/>
+      <input type="number" id="re-floor-max" placeholder="Давхар (дээд)"/>
+      <input type="number" id="re-price-min" placeholder="Үнэ доод (₮)"/>
+      <input type="number" id="re-price-max" placeholder="Үнэ дээд (₮)"/>
+      <input type="number" id="re-area-min" placeholder="Талбай доод (м²)"/>
+      <input type="number" id="re-area-max" placeholder="Талбай дээд (м²)"/>
+      <select id="re-is-new"><option value="">Шинэ/Хуучин</option>
+        <option value="true">Шинэ</option><option value="false">Хуучин</option>
+      </select>
+      <select id="re-garage"><option value="">Гарааш</option>
+        <option value="true">Гарааштай</option><option value="false">Гараашгүй</option>
+      </select>
+      <button class="btn-filter" onclick="loadRealEstate(1)">🔍 Хайх</button>
+      <button class="btn-reset" onclick="resetFilters('re'); loadRealEstate(1)">↺</button>
+    </div>
+    <div id="re-grid" class="ads-grid"></div>
+    <div id="re-pagination" class="pagination"></div>
+  </section>
+
+  <section id="section-cars" class="section hidden">
+    <h2>🚗 Автомашин зарууд</h2>
+    <div class="filter-bar">
+      <select id="car-brand"><option value="">Бүх брэнд</option>
+        <option>Toyota</option><option>Hyundai</option><option>Lexus</option>
+        <option>BMW</option><option>Mercedes</option><option>Mitsubishi</option>
+        <option>Honda</option><option>Nissan</option><option>Kia</option><option>Mazda</option>
+      </select>
+      <input type="text" id="car-model" placeholder="Загвар"/>
+      <select id="car-type"><option value="">Төрөл</option>
+        <option>Жижиг</option><option>Жийп</option><option>Пикап</option>
+        <option>Минивэн</option><option>Купе</option>
+      </select>
+      <select id="car-fuel"><option value="">Түлш</option>
+        <option>Бензин</option><option>Дизель</option><option>Цахилгаан</option><option>Гибрид</option>
+      </select>
+      <select id="car-drive"><option value="">Хөтлөгч</option>
+        <option>4WD</option><option>FWD</option><option>RWD</option><option>AWD</option>
+      </select>
+      <select id="car-trans"><option value="">Хропны төрөл</option>
+        <option>Автомат</option><option>Механик</option><option>Робот</option><option>Вариатор</option>
+      </select>
+      <select id="car-steering"><option value="">Хүрд</option>
+        <option>Зүүн</option><option>Баруун</option>
+      </select>
+      <input type="number" id="car-year-min" placeholder="Он (доод)"/>
+      <input type="number" id="car-year-max" placeholder="Он (дээд)"/>
+      <input type="number" id="car-mileage-max" placeholder="Гүйлт дээд (км)"/>
+      <input type="number" id="car-price-min" placeholder="Үнэ доод (₮)"/>
+      <input type="number" id="car-price-max" placeholder="Үнэ дээд (₮)"/>
+      <select id="car-plate"><option value="">Дугаар</option>
+        <option value="true">Дугаартай</option><option value="false">Дугааргүй</option>
+      </select>
+      <button class="btn-filter" onclick="loadCars(1)">🔍 Хайх</button>
+      <button class="btn-reset" onclick="resetFilters('car'); loadCars(1)">↺</button>
+    </div>
+    <div id="car-grid" class="ads-grid"></div>
+    <div id="car-pagination" class="pagination"></div>
+  </section>
+
+  <section id="section-jobs" class="section hidden">
+    <h2>💼 Ажлын байр</h2>
+    <div class="filter-bar">
+      <select id="job-sector"><option value="">Бүх салбар</option>
+        <option>Мэдээллийн технологи</option><option>Санхүү</option>
+        <option>Боловсрол</option><option>Эрүүл мэнд</option>
+        <option>Барилга</option><option>Худалдаа</option>
+        <option>Тээвэр</option><option>Уул уурхай</option>
+      </select>
+      <input type="text" id="job-title" placeholder="Ажлын нэр"/>
+      <input type="number" id="job-salary-min" placeholder="Цалин доод (₮)"/>
+      <input type="number" id="job-salary-max" placeholder="Цалин дээд (₮)"/>
+      <select id="job-degree"><option value="">Зэрэг</option>
+        <option>Бакалавр</option><option>Магистр</option><option>Доктор</option>
+        <option>Дипломант</option><option>Шаардлагагүй</option>
+      </select>
+      <select id="job-exp"><option value="">Туршлага</option>
+        <option>Туршлагагүй</option><option>1-2 жил</option>
+        <option>3-5 жил</option><option>5+ жил</option>
+      </select>
+      <select id="job-location"><option value="">Байршил</option>
+        <option>Баянзүрх</option><option>Хан-Уул</option><option>Сүхбаатар</option>
+        <option>Чингэлтэй</option><option>Налайх</option><option>Сонгинохайрхан</option>
+      </select>
+      <button class="btn-filter" onclick="loadJobs(1)">🔍 Хайх</button>
+      <button class="btn-reset" onclick="resetFilters('job'); loadJobs(1)">↺</button>
+    </div>
+    <div id="job-grid" class="ads-grid"></div>
+    <div id="job-pagination" class="pagination"></div>
+  </section>
+
+</main>
+
+<div id="post-modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Шинэ зар оруулах</h3>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="tab-row">
+      <button class="tab active" onclick="switchTab('tab-re', this)">🏠 Үл хөдлөх</button>
+      <button class="tab" onclick="switchTab('tab-car', this)">🚗 Автомашин</button>
+      <button class="tab" onclick="switchTab('tab-job', this)">💼 Ажил</button>
+    </div>
+
+    <form id="tab-re" class="form-tab" onsubmit="submitRE(event)">
+      <div class="form-grid">
+        <input name="title" placeholder="Гарчиг" required/>
+        <input name="area" type="number" placeholder="Талбай (м²)" required/>
+        <select name="location" required>
+          <option value="">Байршил сонгох</option>
+          <option>Баянзүрх</option><option>Хан-Уул</option><option>Сүхбаатар</option>
+          <option>Чингэлтэй</option><option>Налайх</option><option>Сонгинохайрхан</option>
+        </select>
+        <input name="rooms" type="number" placeholder="Өрөөний тоо" required/>
+        <input name="floor" type="number" placeholder="Давхар"/>
+        <input name="total_floors" type="number" placeholder="Нийт давхар"/>
+        <label class="check-label"><input name="has_garage" type="checkbox"/> Гараш бий</label>
+        <input name="price" type="number" placeholder="Үнэ (₮)" required/>
+        <label class="check-label"><input name="is_new" type="checkbox" checked/> Шинэ байр</label>
+        <input name="built_year" type="number" placeholder="Баригдсан он"/>
+        <input name="phone" placeholder="Утас" required/>
+        <textarea name="description" placeholder="Тайлбар" rows="3"></textarea>
+        <input name="images" type="file" accept="image/*" multiple/>
+      </div>
+      <button type="submit" class="btn-submit">Зар оруулах</button>
+    </form>
+
+    <form id="tab-car" class="form-tab hidden" onsubmit="submitCar(event)">
+      <div class="form-grid">
+        <select name="brand" required>
+          <option value="">Үйлдвэрлэгч</option>
+          <option>Toyota</option><option>Hyundai</option><option>Lexus</option>
+          <option>BMW</option><option>Mercedes</option><option>Mitsubishi</option>
+          <option>Honda</option><option>Nissan</option><option>Kia</option><option>Mazda</option>
+        </select>
+        <input name="model" placeholder="Загвар" required/>
+        <input name="built_year" type="number" placeholder="Он" required/>
+        <select name="car_type"><option value="">Төрөл</option>
+          <option>Жижиг</option><option>Жийп</option><option>Пикап</option>
+          <option>Минивэн</option><option>Купе</option>
+        </select>
+        <input name="engine_size" type="number" step="0.1" placeholder="Мотор (л)"/>
+        <select name="drive_type"><option value="">Хөтлөгч</option>
+          <option>4WD</option><option>FWD</option><option>RWD</option><option>AWD</option>
+        </select>
+        <select name="steering"><option value="">Хүрдний байрлал</option>
+          <option>Зүүн</option><option>Баруун</option>
+        </select>
+        <select name="transmission"><option value="">Хропны төрөл</option>
+          <option>Автомат</option><option>Механик</option><option>Робот</option><option>Вариатор</option>
+        </select>
+        <select name="fuel_type"><option value="">Түлшний төрөл</option>
+          <option>Бензин</option><option>Дизель</option><option>Цахилгаан</option><option>Гибрид</option>
+        </select>
+        <input name="doors" type="number" placeholder="Хаалганы тоо"/>
+        <input name="mileage" type="number" placeholder="Гүйлт (км)"/>
+        <label class="check-label"><input name="has_plate" type="checkbox" checked/> Дугаартай</label>
+        <input name="price" type="number" placeholder="Үнэ (₮)" required/>
+        <input name="phone" placeholder="Утас" required/>
+        <textarea name="description" placeholder="Тайлбар" rows="2"></textarea>
+        <input name="images" type="file" accept="image/*" multiple/>
+      </div>
+      <button type="submit" class="btn-submit">Зар оруулах</button>
+    </form>
+
+    <form id="tab-job" class="form-tab hidden" onsubmit="submitJob(event)">
+      <div class="form-grid">
+        <select name="sector" required>
+          <option value="">Салбар</option>
+          <option>Мэдээллийн технологи</option><option>Санхүү</option>
+          <option>Боловсрол</option><option>Эрүүл мэнд</option>
+          <option>Барилга</option><option>Худалдаа</option>
+          <option>Тээвэр</option><option>Уул уурхай</option>
+        </select>
+        <input name="sub_sector" placeholder="Дэд салбар"/>
+        <input name="title" placeholder="Ажлын нэр" required/>
+        <input name="salary_min" type="number" placeholder="Цалин доод (₮)"/>
+        <input name="salary_max" type="number" placeholder="Цалин дээд (₮)"/>
+        <textarea name="requirements" placeholder="Тавигдах шаардлага" rows="2"></textarea>
+        <select name="degree">
+          <option value="">Зэрэг</option>
+          <option>Бакалавр</option><option>Магистр</option><option>Доктор</option>
+          <option>Дипломант</option><option>Шаардлагагүй</option>
+        </select>
+        <select name="experience">
+          <option value="">Туршлага</option>
+          <option>Туршлагагүй</option><option>1-2 жил</option>
+          <option>3-5 жил</option><option>5+ жил</option>
+        </select>
+        <select name="location">
+          <option value="">Байршил</option>
+          <option>Баянзүрх</option><option>Хан-Уул</option><option>Сүхбаатар</option>
+          <option>Чингэлтэй</option><option>Налайх</option><option>Сонгинохайрхан</option>
+        </select>
+        <input name="phone" placeholder="Холбоо барих утас" required/>
+        <textarea name="description" placeholder="Дэлгэрэнгүй мэдээлэл" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Зар оруулах</button>
+    </form>
+  </div>
+</div>
+
+<div id="overlay" class="overlay hidden" onclick="closeModal()"></div>
+
+<div id="detail-modal" class="modal hidden">
+  <div class="modal-box modal-box-wide">
+    <div class="modal-header">
+      <h3 id="detail-title"></h3>
+      <button class="close-btn" onclick="closeDetailModal()">✕</button>
+    </div>
+    <div id="detail-images" class="detail-images"></div>
+    <div id="detail-body" class="detail-body"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>© 2026 Үнэтэй.мн — Бүх эрх хуулиар хамгаалагдсан</p>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
